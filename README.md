@@ -2,8 +2,9 @@
 
 <img width="1370" height="735" alt="Image" src="https://github.com/user-attachments/assets/d86e7797-9273-4c0a-8a73-02f67b63865f" />
 
-### EC2 배포 정보
+---
 
+### EC2 배포 정보
 - **퍼블릭 IP:** `3.39.227.80`
 - **Health Check URL:** http://3.39.227.80:8080/actuator/health
 
@@ -12,3 +13,11 @@
 
 #### Actuator Health Check
 <img width="802" height="352" alt="Image" src="https://github.com/user-attachments/assets/7df44ec3-b5ba-4405-a878-2aed05bc1a5e" />
+
+---
+
+### RDS 배포 정보
+- **Actuator Info URL:** http://3.39.227.80:8080/actuator/info
+
+#### RDS 보안 그룹 인바운드 규칙
+<img width="1655" height="478" alt="Image" src="https://github.com/user-attachments/assets/b08890fa-3cea-4c96-a00d-04fd433bd119" />
