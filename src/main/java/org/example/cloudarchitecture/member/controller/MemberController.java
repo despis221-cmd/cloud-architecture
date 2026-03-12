@@ -2,6 +2,7 @@ package org.example.cloudarchitecture.member.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.cloudarchitecture.member.common.ApiResponse;
 import org.example.cloudarchitecture.member.dto.MemberRequestDto;
 import org.example.cloudarchitecture.member.dto.MemberResponseDto;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("api/members")
 @RequiredArgsConstructor
@@ -18,12 +20,14 @@ public class MemberController {
 
     @PostMapping
     public ResponseEntity<ApiResponse<MemberResponseDto>> save(@Valid @RequestBody MemberRequestDto request) {
+        log.info("[API - LOG] POST /api/members - name={}, age={}, mbti={}", request.getName(), request.getAge(), request.getMbti());
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ApiResponse.success("저장 성공", memberService.save(request)));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<MemberResponseDto>> findById(@PathVariable Long id) {
+        log.info("[API - LOG] GET /api/members/{}", id);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(ApiResponse.success("조회 성공", memberService.findById(id)));
     }
