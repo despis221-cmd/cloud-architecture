@@ -25,6 +25,9 @@ jobs:
         env:
           SPRING_PROFILES_ACTIVE: local
           SPRING_CLOUD_AWS_PARAMETERSTORE_ENABLED: false
+          SPRING_CLOUD_AWS_S3_ENABLED: false
+          SPRING_DATASOURCE_URL: jdbc:h2:mem:testdb
+          SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.h2.Driver
 
       - name: Build JAR
         run: ./gradlew bootJar
