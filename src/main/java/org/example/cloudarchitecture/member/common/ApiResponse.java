@@ -4,20 +4,18 @@ import lombok.Getter;
 
 @Getter
 public class ApiResponse<T> {
-    private final int status;
     private final String message;
     private final T data;
 
-    public ApiResponse(int status, String message, T data) {
-        this.status = status;
+    public ApiResponse(String message, T data) {
         this.message = message;
         this.data = data;
     }
     public static <T> ApiResponse<T> success(String message, T data) {
-        return new ApiResponse<>(200, message, data);
+        return new ApiResponse<>(message, data);
     }
 
-    public static <T> ApiResponse<T> error(int status, String message) {
-        return new ApiResponse<>(status, message, null);
+    public static <T> ApiResponse<T> error(String message) {
+        return new ApiResponse<>(message, null);
     }
 }

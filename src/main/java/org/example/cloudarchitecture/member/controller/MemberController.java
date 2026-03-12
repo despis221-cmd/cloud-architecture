@@ -37,12 +37,14 @@ public class MemberController {
     public ResponseEntity<ApiResponse<Void>> uploadProfileImage(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
         log.info("[API - LOG] POST /api/members/{}/profile-image", id);
         memberService.uploadProfileImage(id, file);
-        return ResponseEntity.ok(ApiResponse.success("프로필 이미지 업로드 성공", null));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.success("프로필 이미지 업로드 성공", null));
     }
 
     @GetMapping("/{id}/profile-image")
     public ResponseEntity<ApiResponse<String>> getProfileImageUrl(@PathVariable Long id) {
         log.info("[API - LOG] GET /api/members/{}/profile-image", id);
-        return ResponseEntity.ok(ApiResponse.success("Presigned URL 조회 성공", memberService.getProfileImageUrl(id)));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(ApiResponse.success("Presigned URL 조회 성공", memberService.getProfileImageUrl(id)));
     }
 }
