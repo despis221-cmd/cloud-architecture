@@ -8,12 +8,14 @@ import org.example.cloudarchitecture.member.dto.MemberResponseDto;
 import org.example.cloudarchitecture.member.entity.Member;
 import org.example.cloudarchitecture.member.repository.MemberRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final S3Service s3Service;
 
     public MemberResponseDto save(MemberRequestDto request) {
         Member member = new Member(request.getName(), request.getAge(), request.getMbti());
@@ -24,5 +26,19 @@ public class MemberService {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         return new MemberResponseDto(member);
+    }
+
+    public void uploadProfileImage(Long id, MultipartFile file) {
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        String key = s3Service.upload(file);
+        member.updateProfileImageKey(key);
+        memberRepository.save(member);
+    }
+
+    public String getProfileImageUrl(Long id) {
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        return s3Service.getPresignedUrl(member.getProfileImageKey());
     }
 }
